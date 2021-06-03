@@ -12,4 +12,8 @@ RSpec.describe User do
       it { should validate_presence_of(:password) }
     end
   end
+  describe 'associations' do
+    it { should have_many(:sightings) }
+    it { should have_many(:likes) }
+  end
 end
