@@ -4,6 +4,5 @@ FactoryBot.define do
     latitude { 11.333222 }
     user
     flower
-    image { File.new(Rails.root.join('app', 'assets', 'images', 'flw1.png')) }
   end
 end
