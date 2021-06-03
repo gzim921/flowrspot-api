@@ -6,6 +6,10 @@ Rails.application.routes.draw do
     resource :sightings, only: [:create, :index, :destroy]
   end
 
+  resources :sightings do
+    resources :likes, only: [:create, :destroy]
+  end
+
   get '/flowers/:id', to: 'flowers#show'
   post '/login', to: 'users#login'
   get '/auto_login', to: 'users#auto_login'
