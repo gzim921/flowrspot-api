@@ -9,7 +9,7 @@ RSpec.describe "AuthenticationProcesses" do
 
   describe 'loggin in and signing up' do
     it 'should login successfully' do 
-      post '/login', params: { email: user.email, password: user.password }, headers: token
+      post '/api/v2/login', params: { email: user.email, password: user.password }, headers: token
 
       expect(response).to have_http_status(:ok)
       expect(response.body).to include(user.email)
@@ -17,7 +17,7 @@ RSpec.describe "AuthenticationProcesses" do
     end
 
     it 'should register successfully' do
-      post '/users', params: { user: { username: "test222",
+      post '/api/v2/users', params: { user: { username: "test222",
                                             email: "test222@gmail.com",
                                             password: "test",
                                             password_confirmation: "test" } }
@@ -31,13 +31,13 @@ RSpec.describe "AuthenticationProcesses" do
     let!(:sighting) { create(:sighting) }
 
     it 'should render all flowers and validate types' do
-      get '/flowers'
+      get '/api/v2/flowers'
 
       expect_json_types(flowers: :array_of_objects)
     end
 
     it 'should render flower and sightings and validate types' do
-      get "/flowers/#{flower.id}/sightings"
+      get "/api/v2/flowers/#{flower.id}/sightings"
       create_list(:sighting, 2, flower: flower)
 
       expect(response.body).to include(flower.name)
@@ -50,7 +50,7 @@ RSpec.describe "AuthenticationProcesses" do
     let!(:sighting) { create(:sighting) }
 
     it 'can create sighting' do
-      post "/flowers/#{flower.id}/sightings", params: { logitude: 12.111111,
+      post "/api/v2/flowers/#{flower.id}/sightings", params: { logitude: 12.111111,
                                             latitude: 23.123123,
                                             question: 'Nothing to worry about?' }, headers: token
 
@@ -59,35 +59,35 @@ RSpec.describe "AuthenticationProcesses" do
     end
 
     it 'can like a sighting' do
-      post "/sightings/#{sighting.id}/likes", headers: token
+      post "/api/v2/sightings/#{sighting.id}/likes", headers: token
 
       expect(response.body).to be_json.with_content({ note: 'Sighting liked successfully!' })
     end
 
     context 'when destroying' do
       it 'cannot destroy others sightings' do
-        delete "/flowers/#{flower.id}/sightings/#{sighting.id}", headers: token
+        delete "/api/v2/flowers/#{flower.id}/sightings/#{sighting.id}", headers: token
 
         expect(response.body).to be_json.with_content({ note: 'You dont have permission!!' })
       end
 
       it 'can destroy only his/her sightings' do
         sighting = create(:sighting, user: user, flower: flower)
-        delete "/flowers/#{flower.id}/sightings/#{sighting.id}", headers: token
+        delete "/api/v2/flowers/#{flower.id}/sightings/#{sighting.id}", headers: token
 
         expect(response.body).to be_json.with_content({ note: 'Destroyed successfully!' })
       end
 
       it 'cannot destroy others likes' do
         like = create(:like, sighting: sighting)
-        delete "/sightings/#{sighting.id}/likes/#{like.id}", headers: token
+        delete "/api/v2/sightings/#{sighting.id}/likes/#{like.id}", headers: token
 
         expect(response.body).to be_json.with_content({ note: 'Something went wrong!!' })
       end
 
       it 'can destroy only his/her likes' do
         like = create(:like, sighting: sighting, user: user)
-        delete "/sightings/#{sighting.id}/likes/#{like.id}", headers: token
+        delete "/api/v2/sightings/#{sighting.id}/likes/#{like.id}", headers: token
 
         expect(response.body).to be_json.with_content({ note: 'You disliked this sighting!' })
       end
