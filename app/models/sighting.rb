@@ -3,6 +3,6 @@ class Sighting < ApplicationRecord
 
   belongs_to :user
   belongs_to :flower
-  validates :image, attached: false, content_type: ['image/png', 'image/jpg', 'image/jpeg']
+  validates :image, attached: false
   has_many :likes, dependent: :destroy
 end

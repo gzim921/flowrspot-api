@@ -4,9 +4,6 @@ RSpec.describe Sighting do
   describe 'validations' do
     it { should validate_presence_of(:user).with_message('must exist') }
     it { should validate_presence_of(:flower).with_message('must exist') }
-
-    it { is_expected.to validate_attached_of(:image) }
-    it { is_expected.to validate_content_type_of(:image).allowing('image/png', 'image/jpg', 'image/jpeg') }
   end
 
   describe 'associations' do
