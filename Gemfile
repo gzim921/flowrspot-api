@@ -28,7 +28,10 @@ gem 'httparty'
 gem 'sidekiq'
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
-
+gem 'rspec-json_expectations'
+gem 'rspec-json_matchers', require: false
+gem 'rails-controller-testing'
+gem 'airborne'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
 

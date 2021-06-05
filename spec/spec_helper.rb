@@ -13,6 +13,7 @@
 # it.
 
 require 'active_storage_validations/matchers'
+require "rspec/json_expectations"
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
