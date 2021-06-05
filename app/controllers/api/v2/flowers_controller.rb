@@ -1,4 +1,4 @@
-class FlowersController < ApplicationController
+class Api::V2::FlowersController < ApplicationController
   before_action :authorized, except: :index
   def index
     @flowers = Flower.all

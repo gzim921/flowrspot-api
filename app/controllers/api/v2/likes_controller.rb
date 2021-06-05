@@ -1,4 +1,4 @@
-class LikesController < ApplicationController
+class Api::V2::LikesController < ApplicationController
   def create
     @sighting = Sighting.find(params[:sighting_id])
     @likes = @sighting.likes.build(user: logged_in_user)

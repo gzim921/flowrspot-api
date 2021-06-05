@@ -1,4 +1,4 @@
-class SightingsController < ApplicationController
+class Api::V2::SightingsController < ApplicationController
   before_action :authorized, except: :index
 
   def index
